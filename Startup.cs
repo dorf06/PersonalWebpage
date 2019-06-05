@@ -10,6 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+
 namespace PersonalWebpage
 {
     public class Startup
@@ -49,8 +53,23 @@ namespace PersonalWebpage
                 app.UseHsts();
             }
 
+            var provider = new FileExtensionContentTypeProvider();
+
+            provider.Mappings[".unityweb"] = "application/octet-stream";
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            // StaticFiles hosting for Unity files
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "UnityBuilds")
+                ),
+                RequestPath = "/UnityBuilds",
+                ContentTypeProvider = provider
+            });
+    
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>

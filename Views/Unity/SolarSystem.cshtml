@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+    <link rel="shortcut icon" href="~/UnityBuilds/SolarSystem/TemplateData/favicon.ico">
+    <link rel="stylesheet" href="~/UnityBuilds/SolarSystem/TemplateData/style.css">
+    <script src="~/UnityBuilds/SolarSystem/TemplateData/UnityProgress.js"></script>
+    <script src="~/UnityBuilds/SolarSystem/Build/UnityLoader.js"></script>
+    <script>
+      var unityInstance = UnityLoader.instantiate("unityContainer", "@Url.Content("~/UnityBuilds/SolarSystem/Build/WebGL.json")", {onProgress: UnityProgress});
+    </script>
+
+    <div class="webgl-content">
+      <div id="unityContainer" style="width: 960px; height: 600px"></div>
+      <div class="footer">
+        <div class="webgl-logo"></div>
+        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
+        <div class="title">Solar System Simulation</div>
+      </div>
+    </div>
+</div>
